@@ -94,7 +94,7 @@ export type Work = {
       image: gate[gate.length - 1],
       title: "Receipt system for Car Gate",
       description:
-        "Managing parcel deliveries with this app, seamlessly recording customer information and generating instantreceipts for a smooth and efficient shipping experience.",
+        "Efficiently Managing parcel deliveries, seamlessly recording customer information and generating instantreceipts for a smooth and efficient shipping experience.",
       photos: gate,
     },
     {

@@ -27,6 +27,6 @@ export  function CardSkeleton () {
   
 export  function ProfileSkeleton () {
  return <div className="px-1 w-full">
-    <div className="h-[250px] w-[250px] sm:w-[300px] sm:h-[300px] rounded-full bg-gray-200"></div>
+    <div className="max-h-[250px] max-w-[250px] sm:w-[300px] sm:h-[300px] rounded-full bg-gray-200"></div>
   </div>
 }

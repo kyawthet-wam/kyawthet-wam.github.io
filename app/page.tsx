@@ -35,7 +35,7 @@ export default function Home() {
               successful project outcomes. My dedication to staying updated with
               industry trends ensures I utilize the latest tools and techniques.
               With a passion for crafting exceptional user experiences, I am
-              committed to contributing to your mobile app projects`&apos;`
+              committed to contributing to your mobile app projects&apos;
               success.
             </div>
           </div>
@@ -68,7 +68,7 @@ export default function Home() {
               successful project outcomes. My dedication to staying updated with
               industry trends ensures I utilize the latest tools and techniques.
               With a passion for crafting exceptional user experiences, I am
-              committed to contributing to your mobile app projects`&apos;`
+              committed to contributing to your mobile app projects&apos;
               success.
             </div>
           </div>
@@ -91,12 +91,40 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div id="skills" className="grid grid-flow-col md:grid-flow-row">
-            <div className="col-span-2 md:col-span-2 lg:col-span-4 gap-2 space-y-2">
-              <div className="relative text-xl text-[#083f99] font-bold">
-                Skills
+
+          <div id="skills">
+            <div className="relative text-xl text-[#083f99] font-bold mb-3">
+              Skills
+            </div>
+
+            {/* mobile */}
+            <div className="space-y-2 sm:hidden">
+              <div className="flex flex-row gap-2">
+                <SkillBadge skill="Flutter" />
+                <SkillBadge skill="Dart" />
+                <SkillBadge skill="Java" />
+                <SkillBadge skill="Python" />
               </div>
               <div className="flex flex-row gap-2">
+                <SkillBadge skill="NextJs" />
+                <SkillBadge skill="Firebase" />
+                <SkillBadge skill="Html" />
+                <SkillBadge skill="CSS" />
+              </div>
+              <div className="flex flex-row gap-2">
+                <SkillBadge skill="SQlite" />
+                <SkillBadge skill="Git" />
+                <SkillBadge skill="Problem Solving" />
+              </div>
+              <div className="flex flex-row gap-2">
+                <SkillBadge skill="Communication" />
+                <SkillBadge skill="Teamwork" />
+              </div>
+            </div>
+
+            {/* greater than mobile */}
+            <div className="space-y-2 hidden sm:flex flex-col">
+            <div className="flex flex-row gap-2">
                 <SkillBadge skill="Flutter" />
                 <SkillBadge skill="Dart" />
                 <SkillBadge skill="Java" />
@@ -115,13 +143,10 @@ export default function Home() {
                 <SkillBadge skill="Communication" />
                 <SkillBadge skill="Teamwork" />
               </div>
-              {/* <div className="flex flex-row gap-2">
-                <SkillBadge skill="Communication" />
-                <SkillBadge skill="Teamwork" />
-              </div> */}
             </div>
           </div>
         </div>
+
         <div
           id="experiences"
           className="grid grid-cols-1 lg:grid-cols-[60%_80%] xl:grid-cols-2 gap-10"
@@ -140,6 +165,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+
       </div>
       <div
         id="projects"

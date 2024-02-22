@@ -63,7 +63,7 @@ export async function getProjects() {
       image: gate[gate.length - 1],
       title: "Receipt system for Car Gate",
       description:
-        "Efficiently manage parcel deliveries with this app, seamlessly recording customer details and generating instant receipts for a smoother shipping experience.",
+        "Efficiently Managing parcel deliveries, seamlessly recording customer details and generating instant receipts for a smoother shipping experience.",
       photos: gate,
     },
     {

@@ -2,9 +2,9 @@ import { Linkedin, Mail, Phone } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer id="contacts" className="footer footer-center p-10 bg-base-200 text-base-content rounded">
+    <footer id="contacts" className="footer footer-center p-10 bg-slate-900 text-white rounded">
       <nav>
-        <div className="grid grid-flow-col gap-10">
+        <div className="grid sm:grid-flow-col gap-10">
           <a
             className="hover:text-blue-700 tooltip"
             data-tip="(+95) 09791867084"
