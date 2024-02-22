@@ -1,21 +1,8 @@
 "use client";
 
 import { navbars } from "@/types/definitions";
-import { Laptop2, Link } from "lucide-react";
-import { useEffect, useState } from "react";
 
 export default function NavBar() {
-  const [navbar, setNavbar] = useState<boolean>(false);
-
-  useEffect(() => {
-    let element  =  document.getElementById("my-drawer") as HTMLInputElement; 
-    if(element?.checked){
-      console.log("Checked");
-    } else {
-      console.log("Unchecked");
-    }
-  })
-
 
   return (
     <nav className="w-full bg-white shadow-xs">
