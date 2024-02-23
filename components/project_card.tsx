@@ -26,24 +26,60 @@ export function ProjectCard({ project }: { project: Project }) {
           {project.description}
         </div>
         <div className="card-actions flex flex-col justify-start pt-2">
-          <div className="mb-2">
-            {project.photos == null ? null : <Photos key={project.photos.toString()} title={project.title} photos={project.photos} />}
-            {project.video == null ? null : <Video key={project.video} title={project.title} video={project.video} />}
+          <div className="flex w-full justify-between items-center mb-2">
+            <div>
+              {project.photos == null ? null : <Photos key={project.photos.toString()} title={project.title} photos={project.photos} />}
+              {project.video == null ? null : <Video key={project.video} title={project.title} video={project.video} />}
+            </div>
+           
+              <div className="hidden sm:flex items-center space-x-3">
+                {project.playStoreLink && 
+                  <Platform
+                    name="Play Store"
+                    link={project.playStoreLink}
+                    icon={Play}
+                  />
+                }
+                {project.appStoreLink && 
+                <Platform
+                  name="App Store"
+                  link={project.appStoreLink}
+                  icon={Link}
+                />}
+                {
+                  project.webLink &&  
+                  <Platform 
+                    name="Web" 
+                    link={project.webLink} 
+                    icon={Link} 
+                  />
+                }
+            </div>
           </div>
   
-          <div className="pl-2">
+          <div className="pl-2 sm:hidden">
             <div className="flex ml-auto space-x-3">
-              <Platform
-                name="Play Store"
-                link={project.playStoreLink}
-                icon={Play}
-              />
-              <Platform
-                name="App Store"
-                link={project.appStoreLink}
-                icon={Link}
-              />
-              <Platform name="Web" link={project.webLink} icon={Link} />
+              {project.playStoreLink && 
+                <Platform
+                  name="Play Store"
+                  link={project.playStoreLink}
+                  icon={Play}
+                />
+              }
+              {project.appStoreLink && 
+               <Platform
+                 name="App Store"
+                 link={project.appStoreLink}
+                 icon={Link}
+               />}
+              {
+                project.webLink &&  
+                <Platform 
+                  name="Web" 
+                  link={project.webLink} 
+                  icon={Link} 
+                />
+              }
             </div>
           </div>
           
