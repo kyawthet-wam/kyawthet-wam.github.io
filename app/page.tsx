@@ -124,12 +124,12 @@ export default function Home() {
 
             {/* greater than mobile */}
             <div className="space-y-2 hidden sm:flex flex-col">
-            <div className="flex flex-row gap-2">
+              <div className="flex flex-row gap-2">
                 <SkillBadge skill="Flutter" />
                 <SkillBadge skill="Dart" />
                 <SkillBadge skill="Java" />
                 <SkillBadge skill="Python" />
-                <SkillBadge skill="NextJs" />
+                <SkillBadge skill="Spring" />
               </div>
               <div className="flex flex-row gap-2">
                 <SkillBadge skill="Firebase" />
@@ -165,7 +165,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
       </div>
       <div
         id="projects"

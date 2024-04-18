@@ -18,6 +18,7 @@ export async function getProjects() {
     goldSell,
     fuDashboardVd,
     fuClientVd,
+    mwk,
   ] = await Promise.all([
     getImageUrls("acc"),
     getImageUrls("lz"),
@@ -33,6 +34,7 @@ export async function getProjects() {
     getImageUrls("gold_sell"),
     getDownloadURL(ref(storage, "videos/client.MP4/")),
     getDownloadURL(ref(storage, "videos/dashboard.mp4/")),
+    getImageUrls("mwk"),
   ]);
 
   return [
@@ -142,6 +144,13 @@ export async function getProjects() {
         "Water management system from local water factory including daily sales across agents and factory, managing water bottles, income, expense and tracking water bottle based on customer.",
       photos: dover,
       webLink: "https://host-dover.web.app",
+    },
+    {
+      image: mwk[mwk.length - 1],
+      title: "Moe Wai Kyaw Cafe",
+      description:
+        "Provides seamless raw food management, daily profit tracking, monthly profit charts, expense management, and sales analytics in a user-friendly platform.",
+      photos: mwk,
     },
   ];
 }
