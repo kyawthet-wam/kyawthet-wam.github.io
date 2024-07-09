@@ -1,4 +1,4 @@
-import { projects, works, dover } from "@/types/definitions";
+import { works, dover } from "@/types/definitions";
 import { Footer } from "@/components/footer";
 import { WorkTile } from "@/components/work_tile";
 import { SkillBadge } from "@/components/skill_badge";
