@@ -1,17 +1,23 @@
-import { FileVideo2, Link, LucideIcon, Play, Videotape } from "lucide-react";
+import {
+  Computer,
+  FileVideo2,
+  Link,
+  LucideIcon,
+  Play,
+  Videotape,
+} from "lucide-react";
 import { Project } from "@/types/definitions";
 import { Photos } from "./photos";
 import { Video } from "./videos";
 
 export function ProjectCard({ project }: { project: Project }) {
-
   const showVideo = (video: string) => {
-    const show:any = document.getElementById(video) as HTMLElement;
+    const show: any = document.getElementById(video) as HTMLElement;
 
-        if(show) {
-          show.showModal();
-        }
-  }
+    if (show) {
+      show.showModal();
+    }
+  };
 
   return (
     <div className="card shadow-xl">
@@ -28,61 +34,66 @@ export function ProjectCard({ project }: { project: Project }) {
         <div className="card-actions flex flex-col justify-start pt-2">
           <div className="flex w-full justify-between items-center mb-2">
             <div>
-              {project.photos == null ? null : <Photos key={project.photos.toString()} title={project.title} photos={project.photos} />}
-              {project.video == null ? null : <Video key={project.video} title={project.title} video={project.video} />}
+              {project.photos == null ? null : (
+                <Photos
+                  key={project.photos.toString()}
+                  title={project.title}
+                  photos={project.photos}
+                />
+              )}
+              {project.video == null ? null : (
+                <Video
+                  key={project.video}
+                  title={project.title}
+                  video={project.video}
+                />
+              )}
             </div>
-           
-              <div className="hidden sm:flex items-center space-x-3">
-                {project.playStoreLink && 
-                  <Platform
-                    name="Play Store"
-                    link={project.playStoreLink}
-                    icon={Play}
-                  />
-                }
-                {project.appStoreLink && 
-                <Platform
-                  name="App Store"
-                  link={project.appStoreLink}
-                  icon={Link}
-                />}
-                {
-                  project.webLink &&  
-                  <Platform 
-                    name="Web" 
-                    link={project.webLink} 
-                    icon={Link} 
-                  />
-                }
-            </div>
-          </div>
-  
-          <div className="pl-2 sm:hidden">
-            <div className="flex ml-auto space-x-3">
-              {project.playStoreLink && 
+
+            <div className="hidden sm:flex items-center space-x-3">
+              {project.playStoreLink && (
                 <Platform
                   name="Play Store"
                   link={project.playStoreLink}
                   icon={Play}
                 />
-              }
-              {project.appStoreLink && 
-               <Platform
-                 name="App Store"
-                 link={project.appStoreLink}
-                 icon={Link}
-               />}
-              {
-                project.webLink &&  
-                <Platform 
-                  name="Web" 
-                  link={project.webLink} 
-                  icon={Link} 
+              )}
+              {project.appStoreLink && (
+                <Platform
+                  name="App Store"
+                  link={project.appStoreLink}
+                  icon={Link}
                 />
-              }
+              )}
+              {project.webLink && (
+                <Platform name="Web" link={project.webLink} icon={Link} />
+              )}
+              {project.inDevelopment && <Development icon={Computer} />}
             </div>
           </div>
-          
+
+          <div className="pl-2 sm:hidden">
+            <div className="flex ml-auto space-x-3">
+              {project.playStoreLink && (
+                <Platform
+                  name="Play Store"
+                  link={project.playStoreLink}
+                  icon={Play}
+                />
+              )}
+              {project.appStoreLink && (
+                <Platform
+                  name="App Store"
+                  link={project.appStoreLink}
+                  icon={Link}
+                />
+              )}
+              {project.webLink && (
+                <Platform name="Web" link={project.webLink} icon={Link} />
+              )}
+              {project.inDevelopment && <Development icon={Computer} />}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -109,5 +120,20 @@ function Platform({
         </div>
       )}
     </a>
+  );
+}
+
+function Development({
+  icon: Icon,
+  iconsize = 16,
+}: {
+  icon: LucideIcon;
+  iconsize?: number;
+}) {
+  return (
+    <div className="flex space-x-1 items-center text-[#083f99] font-bold text-sm">
+      <Icon size={iconsize} />
+      <div className="text-xs">Under Development</div>
+    </div>
   );
 }

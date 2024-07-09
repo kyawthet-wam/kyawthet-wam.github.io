@@ -19,6 +19,8 @@ export async function getProjects() {
     fuDashboardVd,
     fuClientVd,
     mwk,
+    missme,
+    amt,
   ] = await Promise.all([
     getImageUrls("acc"),
     getImageUrls("lz"),
@@ -35,6 +37,8 @@ export async function getProjects() {
     getDownloadURL(ref(storage, "videos/client.MP4/")),
     getDownloadURL(ref(storage, "videos/dashboard.mp4/")),
     getImageUrls("mwk"),
+    getImageUrls("missme"),
+    getImageUrls("amt"),
   ]);
 
   return [
@@ -151,6 +155,24 @@ export async function getProjects() {
       description:
         "Provides seamless raw food management, daily profit tracking, monthly profit charts, expense management, and sales analytics in a user-friendly platform.",
       photos: mwk,
+    },
+    {
+      image: missme[missme.length - 1],
+      title: "Miss Me BBQ",
+      description:
+        "Designed for BBQ lovers, our app lets you easily browse the menu with photos and detailed descriptions. Earn points with every purchase and redeem them for rewards. Stay informed about special events, live music, and exclusive happenings at restaurant",
+      photos: missme,
+      appStoreLink: "https://apps.apple.com/us/app/id6505016027",
+      playStoreLink:
+        "https://play.google.com/store/apps/details?id=com.missmebbq.customerapp",
+    },
+    {
+      image: amt[amt.length - 1],
+      title: "Aung Myittar Distribution Managment System",
+      description:
+        "This is an application designed to streamline and automate the sales process within a business.",
+      photos: amt,
+      inDevelopment: true,
     },
   ];
 }

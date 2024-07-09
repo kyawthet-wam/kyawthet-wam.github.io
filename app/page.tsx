@@ -28,9 +28,9 @@ export default function Home() {
             <div className="max-w-5xl text-justify text-slate-600 text-sm whitespace-normal py-8">
               Experienced mobile developer with a proven track record of
               creating polished cross-platform mobile applications using
-              Flutter. With three plus years of hands-on experience, I am able
-              to deliver high-quality, performant apps for both iOS and Android.
-              My focus on clean code, efficient UI/UX design, and collaboration
+              Flutter. With four years of hands-on experience, I am able to
+              deliver high-quality, performant apps for both iOS and Android. My
+              focus on clean code, efficient UI/UX design, and collaboration
               with cross-functional teams has consistently contributed to
               successful project outcomes. My dedication to staying updated with
               industry trends ensures I utilize the latest tools and techniques.
@@ -156,7 +156,7 @@ export default function Home() {
               Experience
             </div>
             <div className="relative text-slate-500 font-semibold text-sm">
-              I have 3+ years of experience in Software Development
+              I have 4 years of experience in Software Development
             </div>
             <div className="pt-10 space-y-4 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[#083f99] before:to-[#083f99]">
               {works.toReversed().map((work) => (
