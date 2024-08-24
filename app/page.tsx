@@ -1,14 +1,23 @@
+"use client";
 import { works, dover } from "@/types/definitions";
 import { Footer } from "@/components/footer";
 import { WorkTile } from "@/components/work_tile";
 import { SkillBadge } from "@/components/skill_badge";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { CardSkeleton, ProfileSkeleton } from "@/components/skeleton";
 import NavBar from "@/components/nav_bar";
 import { ProfileImage } from "../components/profile_image";
 import { Projects } from "../components/projects";
+import React, { useState } from "react";
+import Blogs from "@/components/blogs";
 
 export default function Home() {
+  const [selectedTab, setSelectedTab] = useState("Projects");
+
+  const handleTabClick = (tab: string) => {
+    setSelectedTab(tab);
+  };
+
   return (
     <div>
       <NavBar />
@@ -166,15 +175,51 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div
+      {/* <div
         id="projects"
         className="mx-0 p-1 text-center text-white font-sans font-bold text-lg bg-[#083f99]"
       >
         Projects
+      </div> */}
+
+      <div className="flex justify-center mt-20 ">
+        <div className="flex border  border-gray-300 rounded-md p-1 w-auto h-10">
+          <button
+            className={`flex items-center px-6 py-2 rounded-md w-auto transition-colors ${
+              selectedTab === "Projects"
+                ? "bg-[#083f99] text-white"
+                : "bg-transparent text-gray-600"
+            }`}
+            onClick={() => handleTabClick("Projects")}
+          >
+            Projects
+          </button>
+          <button
+            className={`flex items-center px-6 py-2 rounded-md w-auto  transition-colors ${
+              selectedTab === "Blogs"
+                ? "bg-[#083f99] text-white"
+                : "bg-transparent text-gray-600"
+            }`}
+            onClick={() => handleTabClick("Blogs")}
+          >
+            Blogs
+          </button>
+        </div>
       </div>
-      <Suspense fallback={<CardSkeleton />}>
-        <Projects />
-      </Suspense>
+      {/* Content Section */}
+      {selectedTab === "Projects" ? (
+        <div style={{ display: selectedTab === "Projects" ? "block" : "none" }}>
+          <Suspense fallback={<CardSkeleton />}>
+            <Projects />
+          </Suspense>
+        </div>
+      ) : (
+        <div style={{ display: selectedTab === "Blogs" ? "block" : "none" }}>
+          <Suspense fallback={<CardSkeleton />}>
+            <Blogs />
+          </Suspense>
+        </div>
+      )}
       <Footer />
     </div>
   );

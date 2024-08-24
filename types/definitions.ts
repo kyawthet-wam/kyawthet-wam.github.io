@@ -207,3 +207,10 @@ export const navbars = [
     title: "Contacts",
   },
 ];
+
+export type BlogPost = {
+  title: string;
+  link: string;
+  pubDate: string;
+  description: string;
+};
