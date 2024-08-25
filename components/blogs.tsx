@@ -49,7 +49,7 @@ export default function Blogs() {
   return (
     <div>
       {blogs.map((blog, index) => (
-        <BlogCard blog={blog} />
+        <BlogCard key={blog.link} blog={blog} />
       ))}
     </div>
   );

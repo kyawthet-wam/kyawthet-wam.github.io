@@ -1,8 +1,30 @@
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "./storage";
 import { getImageUrls } from "./getImageUrls";
+import { Project } from "../types/definitions";;
+
+// Cache to store fetched projects data
+let cachedProjects:Project[] | null = null;
+
+let cachedVideoUrls: { [key: string]: string } = {};
 
 export async function getProjects() {
+  // Return cached data if it exists
+  if (cachedProjects !== null) {
+    return cachedProjects;
+  }
+
+  // Function to fetch or get cached URL
+  async function fetchOrGetCachedURL(path: string): Promise<string> {
+    if (cachedVideoUrls[path]) {
+      return cachedVideoUrls[path];
+    }
+    const url = await getDownloadURL(ref(storage, path));
+    cachedVideoUrls[path] = url;
+    return url;
+  }
+
+  // Fetch data from Firebase and other sources
   const [
     accPhotos,
     lz,
@@ -34,14 +56,15 @@ export async function getProjects() {
     getImageUrls("fu"),
     getImageUrls("dover"),
     getImageUrls("gold_sell"),
-    getDownloadURL(ref(storage, "videos/client.MP4/")),
-    getDownloadURL(ref(storage, "videos/dashboard.mp4/")),
+    fetchOrGetCachedURL("videos/client.MP4/"),
+    fetchOrGetCachedURL("videos/dashboard.mp4/"),
     getImageUrls("mwk"),
     getImageUrls("missme"),
     getImageUrls("amt"),
   ]);
 
-  return [
+  // Structure the data into projects
+  const projects = [
     {
       title: "E-commerce Dashboard",
       image: fu[fu.length - 1],
@@ -84,7 +107,6 @@ export async function getProjects() {
       title: "YC Fitness",
       description:
         "Unlock personalized member levels featuring tailored nutrition plans, workout routines, and hydration tracking. Seamlessly integrated with top social media platforms like Facebook, enjoy chatting, video calls, and instant notifications for an enriched experience.",
-
       appStoreLink: "https://apps.apple.com/us/app/yc-fitness/id1666451656",
       playStoreLink:
         "https://play.google.com/store/apps/details?id=com.yc_fitness&pli=1",
@@ -99,7 +121,7 @@ export async function getProjects() {
     },
     {
       image: pos[0],
-      title: "New Empire POS (Web,Mobile)",
+      title: "New Empire POS (Web, Mobile)",
       description:
         "Cloud-based POS system for retail environment to enhance inventory management and streamline checkout processes, reducing waiting times for customers.",
       playStoreLink:
@@ -128,7 +150,7 @@ export async function getProjects() {
       image: goldSell[0],
       title: "Aungthamardi - Gold Sell",
       description:
-        "The Aung ThamardiGold Sale App is an internal application used by Aung Thamardi employees to facilitate the selling processes for gems and jewelry.",
+        "The Aung Thamardi Gold Sale App is an internal application used by Aung Thamardi employees to facilitate the selling processes for gems and jewelry.",
       playStoreLink:
         "https://play.google.com/store/apps/details?id=atmd.app.goldsell",
       photos: goldSell,
@@ -168,11 +190,17 @@ export async function getProjects() {
     },
     {
       image: amt[amt.length - 1],
-      title: "Aung Myittar Distribution Managment System",
+      title: "Aung Myittar Distribution Management System",
       description:
         "This is an application designed to streamline and automate the sales process within a business.",
       photos: amt,
       inDevelopment: true,
     },
   ];
+
+  // Cache the result for future calls
+  cachedProjects = projects;
+
+  // Return the projects data
+  return projects;
 }
