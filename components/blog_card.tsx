@@ -3,7 +3,6 @@ import { BlogPost } from "@/types/definitions";
 export function BlogCard({ blog }: { blog: BlogPost }) {
   return (
     <div
-      key={blog.link}
       className="bg-white shadow-md rounded-md p-4 max-w-md mx-auto my-4"
     >
       <h2 className="text-xl font-bold text-gray-800">{blog.title}</h2>
