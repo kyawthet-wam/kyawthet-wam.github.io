@@ -3,11 +3,17 @@ import { storage } from "./storage";
 import { getImageUrls } from "./getImageUrls";
 import { Project } from "../types/definitions";
 
-// Define cache key for local storage
+// Define cache keys and expiry
 const CACHE_KEY = 'cachedVideoUrls';
 const PROJECTS_CACHE_KEY = 'cachedProjects';
+const CACHE_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 const isBrowser = typeof window !== 'undefined';
+
+// Check if cache has expired
+function isCacheExpired(timestamp: number): boolean {
+  return Date.now() - timestamp > CACHE_EXPIRY_MS;
+}
 
 // Load cached video URLs from localStorage
 function loadCache(): { [key: string]: string } {
@@ -42,11 +48,19 @@ async function fetchOrGetCachedURL(path: string): Promise<string> {
 }
 
 export async function getProjects(): Promise<Project[]> {
-  // Check if projects are already stored in localStorage
+  if (!isBrowser) {
+    throw new Error("Not running in a browser environment");
+  }
+
+  // Check if projects are already stored in localStorage and not expired
   const cachedProjectsJSON = localStorage.getItem(PROJECTS_CACHE_KEY);
   
   if (cachedProjectsJSON) {
-    return JSON.parse(cachedProjectsJSON);
+    const { timestamp, projects } = JSON.parse(cachedProjectsJSON);
+    
+    if (!isCacheExpired(timestamp)) {
+      return projects;
+    }
   }
 
   // Fetch data from Firebase and other sources
@@ -222,9 +236,12 @@ export async function getProjects(): Promise<Project[]> {
     },
   ];
 
-
-  // Cache the result in localStorage
-  localStorage.setItem(PROJECTS_CACHE_KEY, JSON.stringify(projects));
+  // Cache the result in localStorage with a timestamp
+  const cacheData = {
+    timestamp: Date.now(),
+    projects,
+  };
+  localStorage.setItem(PROJECTS_CACHE_KEY, JSON.stringify(cacheData));
 
   // Return the projects data
   return projects;

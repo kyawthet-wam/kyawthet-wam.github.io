@@ -4,7 +4,6 @@ import { useProjects } from "../hooks/use-projects";
 export async function Projects() {
   const { projects, loading, error } = useProjects();
 
-  console.log("po", projects);
   return (
     <div>
       <div className="mx-10 my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
