@@ -1,27 +1,52 @@
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "./storage";
 import { getImageUrls } from "./getImageUrls";
-import { Project } from "../types/definitions";;
+import { Project } from "../types/definitions";
 
-// Cache to store fetched projects data
-let cachedProjects:Project[] | null = null;
+// Define cache key for local storage
+const CACHE_KEY = 'cachedVideoUrls';
+const PROJECTS_CACHE_KEY = 'cachedProjects';
 
-let cachedVideoUrls: { [key: string]: string } = {};
+const isBrowser = typeof window !== 'undefined';
 
-export async function getProjects() {
-  // Return cached data if it exists
-  if (cachedProjects !== null) {
-    return cachedProjects;
+// Load cached video URLs from localStorage
+function loadCache(): { [key: string]: string } {
+  if (!isBrowser) return {};
+  const cache = localStorage.getItem(CACHE_KEY);
+  return cache ? JSON.parse(cache) : {};
+}
+
+// Save video URLs cache to localStorage
+function saveCache(cache: { [key: string]: string }) {
+  if (isBrowser) {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
   }
+}
 
-  // Function to fetch or get cached URL
-  async function fetchOrGetCachedURL(path: string): Promise<string> {
-    if (cachedVideoUrls[path]) {
-      return cachedVideoUrls[path];
-    }
+let cachedVideoUrls = loadCache();
+
+// Fetch or get cached URL for videos
+async function fetchOrGetCachedURL(path: string): Promise<string> {
+  if (cachedVideoUrls[path]) {
+    return cachedVideoUrls[path];
+  }
+  try {
     const url = await getDownloadURL(ref(storage, path));
     cachedVideoUrls[path] = url;
+    saveCache(cachedVideoUrls);
     return url;
+  } catch (error) {
+    console.error(`Failed to fetch URL for path: ${path}`, error);
+    throw error; // Propagate error to handle it in the caller function
+  }
+}
+
+export async function getProjects(): Promise<Project[]> {
+  // Check if projects are already stored in localStorage
+  const cachedProjectsJSON = localStorage.getItem(PROJECTS_CACHE_KEY);
+  
+  if (cachedProjectsJSON) {
+    return JSON.parse(cachedProjectsJSON);
   }
 
   // Fetch data from Firebase and other sources
@@ -63,7 +88,6 @@ export async function getProjects() {
     getImageUrls("amt"),
   ]);
 
-  // Structure the data into projects
   const projects = [
     {
       title: "E-commerce Dashboard",
@@ -198,8 +222,9 @@ export async function getProjects() {
     },
   ];
 
-  // Cache the result for future calls
-  cachedProjects = projects;
+
+  // Cache the result in localStorage
+  localStorage.setItem(PROJECTS_CACHE_KEY, JSON.stringify(projects));
 
   // Return the projects data
   return projects;
