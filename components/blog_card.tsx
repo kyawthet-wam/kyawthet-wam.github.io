@@ -5,6 +5,13 @@ export function BlogCard({ blog }: { blog: BlogPost }) {
     <div
       className="bg-white shadow-md rounded-md p-4 max-w-md mx-auto my-4"
     >
+      <figure className="w-full max-w-s mx-auto mb-5">
+        <img 
+          src={blog.image}
+          alt="Image"
+          className="w-full h-52 object-cover rounded-lg" 
+        />
+      </figure>
       <h2 className="text-xl font-bold text-gray-800">{blog.title}</h2>
       <p className="text-sm text-gray-500 mt-2">
         {new Date(blog.pubDate!).toDateString()}
