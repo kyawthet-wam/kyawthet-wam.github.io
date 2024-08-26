@@ -236,13 +236,11 @@ export async function getProjects(): Promise<Project[]> {
     },
   ];
 
-  // Cache the result in localStorage with a timestamp
   const cacheData = {
     timestamp: Date.now(),
     projects,
   };
   localStorage.setItem(PROJECTS_CACHE_KEY, JSON.stringify(cacheData));
 
-  // Return the projects data
   return projects;
 }

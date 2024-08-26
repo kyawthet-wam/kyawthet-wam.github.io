@@ -1,8 +1,13 @@
 import { ProjectCard } from "@/components/project_card";
 import { useProjects } from "../hooks/use-projects";
+import { CardSkeleton } from "./skeleton";
 
 export function Projects() {
   const { projects, loading, error } = useProjects();
+
+  if (loading) {
+    return <CardSkeleton />
+  }
 
   return (
     <div>

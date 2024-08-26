@@ -12,13 +12,13 @@ export function useProjects() {
   useEffect(() => {
     const fetchAndCacheProjects = async () => {
       try {
-        // Check for cached data
+        
         const cachedData = localStorage.getItem(LOCAL_STORAGE_KEY);
         if (cachedData) {
           setProjects(JSON.parse(cachedData));
           setLoading(false);
         } else {
-          // Fetch data and cache it
+          
           const data = await fetchProjects();
           setProjects(data);
           localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
