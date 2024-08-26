@@ -222,7 +222,7 @@ export const blogs: BlogPost[] = [
     link: "https://blog.stackademic.com/flutter-app-architecture-inspiring-domain-driven-design-d681e5e7c0c6",
     pubDate: "Sun Jul 14 2024",
     description: "",
-    image: "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*m6wPdUK2w1MFrQwKosDayg.png"
+    image: "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*8xrG0Vz61Rx3Uj1HifXR7A.png"
   },
   {
     title: "Riverpod Essentials: Mastering State Management in Flutter Apps",
@@ -236,6 +236,6 @@ export const blogs: BlogPost[] = [
     link: "https://medium.com/@kyawthetwam/flutter-pagination-with-performing-side-effects-in-riverpod-494a0b861532",
     pubDate: "Sat May 11 2024",
     description: "",
-    image: "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*m6wPdUK2w1MFrQwKosDayg.png"
+    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*fdLeozmS48Mh24KqPULLBQ.jpeg"
   },
 ];
