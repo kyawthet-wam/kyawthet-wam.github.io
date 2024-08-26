@@ -1,7 +1,7 @@
 import { ProjectCard } from "@/components/project_card";
 import { useProjects } from "../hooks/use-projects";
 
-export async function Projects() {
+export function Projects() {
   const { projects, loading, error } = useProjects();
 
   return (
