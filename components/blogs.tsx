@@ -10,12 +10,21 @@ export default function Blogs() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/api/rss");
+        const rssUrl = "https://cors-anywhere.herokuapp.com/https://medium.com/feed/@kyawthetwam";
+        const response = await fetch(rssUrl);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        const blogs = await response.json();
-        setBlogs(blogs);
+        const xml = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xml, "text/xml");
+        const items = Array.from(xmlDoc.querySelectorAll("item")).map((item) => ({
+          title: item.querySelector("title")?.textContent || "",
+          link: item.querySelector("link")?.textContent || "",
+          description: item.querySelector("description")?.textContent || "",
+          pubDate: item.querySelector("pubDate")?.textContent || "",
+        }));
+        setBlogs(items);
         setError(false);
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -48,9 +57,11 @@ export default function Blogs() {
 
   return (
     <div>
-      {blogs.map((blog, index) => (
-        <BlogCard key={blog.link} blog={blog} />
-      ))}
+      <div className="mx-10 my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {blogs.map((blog, index) => (
+          <BlogCard key={blog.link} blog={blog} />
+        ))}
+      </div>
     </div>
   );
 }
