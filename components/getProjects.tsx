@@ -168,11 +168,12 @@ export async function getProjects() {
     },
     {
       image: amt[amt.length - 1],
-      title: "Aung Myittar Distribution Managment System",
+      title: "EDKA Distribution Managment System",
       description:
         "This is an application designed to streamline and automate the sales process within a business.",
       photos: amt,
-      inDevelopment: true,
+      playStoreLink:
+        "https://play.google.com/store/apps/details?id=com.edkamm.dms",
     },
   ];
 }
