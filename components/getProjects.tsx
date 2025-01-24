@@ -1,8 +1,69 @@
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "./storage";
 import { getImageUrls } from "./getImageUrls";
+import { Project } from "../types/definitions";
 
-export async function getProjects() {
+// Define cache keys and expiry
+const CACHE_KEY = "cachedVideoUrls";
+const PROJECTS_CACHE_KEY = "cachedProjects";
+const CACHE_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+const isBrowser = typeof window !== "undefined";
+
+// Check if cache has expired
+function isCacheExpired(timestamp: number): boolean {
+  return Date.now() - timestamp > CACHE_EXPIRY_MS;
+}
+
+// Load cached video URLs from localStorage
+function loadCache(): { [key: string]: string } {
+  if (!isBrowser) return {};
+  const cache = localStorage.getItem(CACHE_KEY);
+  return cache ? JSON.parse(cache) : {};
+}
+
+// Save video URLs cache to localStorage
+function saveCache(cache: { [key: string]: string }) {
+  if (isBrowser) {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+  }
+}
+
+let cachedVideoUrls = loadCache();
+
+// Fetch or get cached URL for videos
+async function fetchOrGetCachedURL(path: string): Promise<string> {
+  if (cachedVideoUrls[path]) {
+    return cachedVideoUrls[path];
+  }
+  try {
+    const url = await getDownloadURL(ref(storage, path));
+    cachedVideoUrls[path] = url;
+    saveCache(cachedVideoUrls);
+    return url;
+  } catch (error) {
+    console.error(`Failed to fetch URL for path: ${path}`, error);
+    throw error; // Propagate error to handle it in the caller function
+  }
+}
+
+export async function getProjects(): Promise<Project[]> {
+  if (!isBrowser) {
+    throw new Error("Not running in a browser environment");
+  }
+
+  // Check if projects are already stored in localStorage and not expired
+  const cachedProjectsJSON = localStorage.getItem(PROJECTS_CACHE_KEY);
+
+  if (cachedProjectsJSON) {
+    const { timestamp, projects } = JSON.parse(cachedProjectsJSON);
+
+    if (!isCacheExpired(timestamp)) {
+      return projects;
+    }
+  }
+
+  // Fetch data from Firebase and other sources
   const [
     accPhotos,
     lz,
@@ -34,14 +95,14 @@ export async function getProjects() {
     getImageUrls("fu"),
     getImageUrls("dover"),
     getImageUrls("gold_sell"),
-    getDownloadURL(ref(storage, "videos/client.MP4/")),
-    getDownloadURL(ref(storage, "videos/dashboard.mp4/")),
+    fetchOrGetCachedURL("videos/client.MP4/"),
+    fetchOrGetCachedURL("videos/dashboard.mp4/"),
     getImageUrls("mwk"),
     getImageUrls("missme"),
     getImageUrls("amt"),
   ]);
 
-  return [
+  const projects = [
     {
       title: "E-commerce Dashboard",
       image: fu[fu.length - 1],
@@ -84,7 +145,6 @@ export async function getProjects() {
       title: "YC Fitness",
       description:
         "Unlock personalized member levels featuring tailored nutrition plans, workout routines, and hydration tracking. Seamlessly integrated with top social media platforms like Facebook, enjoy chatting, video calls, and instant notifications for an enriched experience.",
-
       appStoreLink: "https://apps.apple.com/us/app/yc-fitness/id1666451656",
       playStoreLink:
         "https://play.google.com/store/apps/details?id=com.yc_fitness&pli=1",
@@ -99,7 +159,7 @@ export async function getProjects() {
     },
     {
       image: pos[0],
-      title: "New Empire POS (Web,Mobile)",
+      title: "New Empire POS (Web, Mobile)",
       description:
         "Cloud-based POS system for retail environment to enhance inventory management and streamline checkout processes, reducing waiting times for customers.",
       playStoreLink:
@@ -128,7 +188,7 @@ export async function getProjects() {
       image: goldSell[0],
       title: "Aungthamardi - Gold Sell",
       description:
-        "The Aung ThamardiGold Sale App is an internal application used by Aung Thamardi employees to facilitate the selling processes for gems and jewelry.",
+        "The Aung Thamardi Gold Sale App is an internal application used by Aung Thamardi employees to facilitate the selling processes for gems and jewelry.",
       playStoreLink:
         "https://play.google.com/store/apps/details?id=atmd.app.goldsell",
       photos: goldSell,
@@ -176,4 +236,12 @@ export async function getProjects() {
         "https://play.google.com/store/apps/details?id=com.edkamm.dms",
     },
   ];
+
+  const cacheData = {
+    timestamp: Date.now(),
+    projects,
+  };
+  localStorage.setItem(PROJECTS_CACHE_KEY, JSON.stringify(cacheData));
+
+  return projects;
 }

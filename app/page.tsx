@@ -10,6 +10,7 @@ import { ProfileImage } from "../components/profile_image";
 import { Projects } from "../components/projects";
 import React, { useState } from "react";
 import Blogs from "@/components/blogs";
+import { BlogPost } from "@/types/definitions";
 
 export default function Home() {
   const [selectedTab, setSelectedTab] = useState("Projects");

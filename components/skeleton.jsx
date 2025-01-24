@@ -2,7 +2,7 @@
 export  function CardSkeleton () {
     return (
       <>
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 m-10">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 m-10">
   {[...Array(10)].map((_, index) => (
     <div key={index} className="bg-white shadow-md rounded-md animate-pulse">
           <div className="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded"></div>
